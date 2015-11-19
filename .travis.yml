@@ -4,6 +4,7 @@ python:
 install:
   - pip install networkx
   - pip install matplotlib
+  - pip install scipy
 before_script:
   - export PYTHONPATH='.'
 script: python tests/AmazonTest.py
