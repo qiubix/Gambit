@@ -1,6 +1,6 @@
 import unittest
 
-from amazon.graphBuilder import importGraph
+from graphBuilder import importGraph
 
 
 class TestImportGraph(unittest.TestCase):
