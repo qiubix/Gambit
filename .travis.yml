@@ -2,6 +2,8 @@ language: python
 python:
   - "2.7"
   - "3.3"
+install:
+  - pip install networkx
 before_script:
   - export PYTHONPATH='.'
 script: python tests/test_make_graph1.py
