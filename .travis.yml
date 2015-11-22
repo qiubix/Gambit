@@ -4,6 +4,7 @@ python:
   - "3.3"
 install:
   - pip install networkx
+  - pip install matplotlib
 before_script:
   - export PYTHONPATH='.'
 script: python tests/test_make_graph1.py
