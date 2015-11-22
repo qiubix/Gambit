@@ -1,5 +1,5 @@
 import networkx as nx
-import matplotlib.pyplot as plot
+# import matplotlib.pyplot as plot
 
 
 def make_graph1():
@@ -13,9 +13,9 @@ def make_graph1():
     return G
 
 
-G = make_graph1()
-print G.number_of_nodes()
-print G.number_of_edges()
-nx.draw(G)
+# G = make_graph1()
+# print G.number_of_nodes()
+# print G.number_of_edges()
+# nx.draw(G)
 
-plot.show()
+# plot.show()
