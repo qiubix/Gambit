@@ -1,3 +1,4 @@
+import networkx as nx
 import unittest
 
 from Amazon import AmazonGraphAnalyzer
@@ -5,9 +6,9 @@ from Amazon import AmazonGraphAnalyzer
 
 # + import graph - check number of nodes and edges
 # + count connected components
-# TODO: get biggest connected component (cound no of nodes and edges)
-# TODO: get mean assortativity
-# TODO: get Pearson assortativity
+# + get biggest connected component (cound no of nodes and edges)
+# + get mean assortativity
+# + get Pearson assortativity
 
 class TestImportGraph(unittest.TestCase):
 
@@ -24,7 +25,16 @@ class TestImportGraph(unittest.TestCase):
 
     def test_get_largest_connected_component(self):
         largest_cc = self.analyzer.getLargestConnectedComponent()
-        self.assertEquals(len(largest_cc), 4)
+        self.assertEquals(nx.number_of_nodes(largest_cc), 4)
+        self.assertEquals(nx.number_of_edges(largest_cc), 6)
+
+    def test_get_pearson_coefficient(self):
+        coefficient = self.analyzer.calculatePearsonCorrelationCoefficient()
+        self.assertEquals(coefficient, 1)
+
+    def test_get_degree_assortativity_coefficient(self):
+        coefficient = self.analyzer.calculateDegreeAssortativityCoefficient()
+        self.assertEquals(coefficient, 0.999999999999998)
 
 
 if __name__ == '__main__':

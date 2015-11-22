@@ -22,7 +22,13 @@ class AmazonGraphAnalyzer:
         return nx.number_connected_components(self.amazonGraph)
 
     def getLargestConnectedComponent(self):
-        return max(nx.connected_components(self.amazonGraph), key=len)
+        return max(nx.connected_component_subgraphs(self.amazonGraph), key=len)
+
+    def calculatePearsonCorrelationCoefficient(self):
+        return nx.degree_pearson_correlation_coefficient(self.amazonGraph)
+
+    def calculateDegreeAssortativityCoefficient(self):
+        return nx.degree_assortativity_coefficient(self.amazonGraph)
 
     def exportToPajek(self):
         nx.write_pajek(self.amazonGraph, 'amazon-graph.net')
@@ -36,3 +42,4 @@ if __name__ == '__main__':
     print "Amazon graph has:", analyzer.getNumberOfEdges(), "edges"
     print "Number of connected components: ", analyzer.getNumberOfConnectedComponents()
     print "Largest CC size: ", len(analyzer.getLargestConnectedComponent())
+    print "Pearson coefficient:", analyzer.calculatePearsonCorrelationCoefficient()
