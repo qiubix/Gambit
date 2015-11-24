@@ -1,5 +1,7 @@
 import networkx as nx
 
+import time
+
 
 class AmazonGraphAnalyzer:
 
@@ -35,11 +37,31 @@ class AmazonGraphAnalyzer:
 
 if __name__ == '__main__':
     analyzer = AmazonGraphAnalyzer()
+
+    start = time.time()
     amazonGraph = analyzer.importGraph("com-amazon.ungraph.txt")
+    print "time:", time.time() - start
+
     print "Amazon product co-purchasing network"
+
+    start = time.time()
     print nx.info(amazonGraph)
     print "Amazon graph has:", analyzer.getNumberOfNodes(), "nodes"
     print "Amazon graph has:", analyzer.getNumberOfEdges(), "edges"
+    print "time:", time.time() - start
+
+    start = time.time()
     print "Number of connected components: ", analyzer.getNumberOfConnectedComponents()
+    print "time:", time.time() - start
+
+    start = time.time()
     print "Largest CC size: ", len(analyzer.getLargestConnectedComponent())
+    print "time:", time.time() - start
+
+    start = time.time()
     print "Pearson coefficient:", analyzer.calculatePearsonCorrelationCoefficient()
+    print "time:", time.time() - start
+
+    start = time.time()
+    print "Degree assortativity coefficient", analyzer.calculateDegreeAssortativityCoefficient()
+    print "time:", time.time() - start
