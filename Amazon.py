@@ -35,6 +35,33 @@ class AmazonGraphAnalyzer:
     def exportToPajek(self):
         nx.write_pajek(self.amazonGraph, 'amazon-graph.net')
 
+
+
+def histogram(G):
+    sorted_degree = sorted(G.degree().items(), key=operator.itemgetter(1))
+    degree = []
+    histo = []
+    X = []
+    maxdeg = 0
+    for val in G.degree().values():
+        if maxdeg < val:
+            maxdeg = val
+    for i in range(0, maxdeg + 1):
+        histo.append(0)
+        X.append(i)
+    for key, val in sorted_degree:
+        if val > 0:
+            degree.append(val)
+            histo[val] += 1
+    plt.loglog(X, histo)
+    suma = 0
+    for i in degree:
+        suma += math.log(2 * i)
+
+    print 1 / suma * len(degree) + 1
+    plt.show()
+
+
 if __name__ == '__main__':
     analyzer = AmazonGraphAnalyzer()
 
