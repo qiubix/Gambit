@@ -50,12 +50,12 @@ class AmazonGraphAnalyzer:
     def exportToPajek(self):
         nx.write_pajek(self.amazonGraph, 'amazon-graph.net')
 
-    def getAverageDegreeOfFirstNodeNeighbours(self):
+    def getAverageDegreeOfNeighbours(self):
         averageNeighbourDegrees = nx.average_degree_connectivity(self.amazonGraph)
         return averageNeighbourDegrees
 
     def drawData(self):
-        averageNeighbourDegrees = self.getAverageDegreeOfFirstNodeNeighbours()
+        averageNeighbourDegrees = self.getAverageDegreeOfNeighbours()
         plt.plot(averageNeighbourDegrees.keys(), averageNeighbourDegrees.values(), 'ro')
         plt.show()
 
