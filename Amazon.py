@@ -59,16 +59,23 @@ class AmazonGraphAnalyzer:
         plt.show()
 
     def calculatePearson(self):
-        averageNeighbourDegrees = self.getAverageDegreeOfNeighbours()
-        K = self.amazonGraph.number_of_nodes()
+        deg = self.amazonGraph.degree()
+        edges = self.amazonGraph.edges()
+        numberOfLinks = len(edges)
+        K = float(numberOfLinks)
+        degi = []
+        degj = []
+        for link in edges:
+            degi.append(deg.get(link[0]))
+            degj.append(deg.get(link[1]))
+
         product = 0
         summ = 0
         sumSquared = 0
-        for key in averageNeighbourDegrees.iterkeys():
-            for value in averageNeighbourDegrees.itervalues():
-                product += key*value
-                summ += (key + value)
-                sumSquared += (key**2 + value**2)
+        for k in range(0, numberOfLinks):
+            product += (degi[k] * degj[k])
+            summ += (degi[k] + degj[k])
+            sumSquared += ((degi[k])**2 + (degi[k])**2)
 
         bullshitExpression = (summ / (K * 2)) ** 2
         anotherBullshitExpression = (sumSquared/(K*2))
@@ -126,9 +133,9 @@ if __name__ == '__main__':
     print "Number of connected components: ", analyzer.getNumberOfConnectedComponents()
     print "time:", time.time() - start
 
-    start = time.time()
-    print "Largest CC size: ", len(analyzer.getLargestConnectedComponent())
-    print "time:", time.time() - start
+#    start = time.time()
+#    print "Largest CC size: ", len(analyzer.getLargestConnectedComponent())
+#    print "time:", time.time() - start
 
     start = time.time()
     print "Pearson coefficient:", analyzer.calculatePearsonCorrelationCoefficient()

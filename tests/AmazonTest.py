@@ -36,9 +36,9 @@ class TestImportGraph(unittest.TestCase):
         coefficient = self.analyzer.calculateDegreeAssortativityCoefficient()
         self.assertEquals(coefficient, 0.999999999999998)
 
-    # def test_should_calculate_pearson_by_different_method(self):
-    #     coefficient = self.analyzer.calculatePearson()
-    #     self.assertEquals(coefficient, 1)
+    def test_should_calculate_pearson_by_different_method(self):
+        coefficient = self.analyzer.calculatePearson()
+        self.assertEquals(coefficient, 1)
 
     # def test_get_list_of_first_degrees(self):
     #     node1 = self.analyzer.getAverageDegreeOfFirstNodeNeighbours()
