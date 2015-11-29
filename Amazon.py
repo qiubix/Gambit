@@ -1,16 +1,31 @@
 import networkx as nx
-
 import time
+import operator
+import matplotlib.pyplot as plt
+import math
+from networkx.algorithms.centrality import betweenness
+
 
 
 class AmazonGraphAnalyzer:
-
     def __init__(self):
         self.amazonGraph = nx.Graph()
 
     def importGraph(self, inputFileName):
+        V = []
+        i = 0
         fileName = open(inputFileName, 'rb')
-        amazonGraph = nx.read_edgelist(fileName)
+        for line in fileName:
+            i += 1
+            if line.split()[0] != '#':
+                v = (int(line.split()[0]), int(line.split()[1]))
+                V.append(v)
+            if i == 7302110:
+                break
+
+        amazonGraph = nx.Graph(V)
+
+        #amazonGraph = nx.read_edgelist(fileName)
         self.amazonGraph = amazonGraph
         return amazonGraph
 
@@ -35,6 +50,14 @@ class AmazonGraphAnalyzer:
     def exportToPajek(self):
         nx.write_pajek(self.amazonGraph, 'amazon-graph.net')
 
+    def getAverageDegreeOfFirstNodeNeighbours(self):
+        averageNeighbourDegrees = nx.average_degree_connectivity(self.amazonGraph)
+        return averageNeighbourDegrees
+
+    def drawData(self):
+        averageNeighbourDegrees = self.getAverageDegreeOfFirstNodeNeighbours()
+        plt.plot(averageNeighbourDegrees.keys(), averageNeighbourDegrees.values(), 'ro')
+        plt.show()
 
 
 def histogram(G):
@@ -67,15 +90,21 @@ if __name__ == '__main__':
 
     start = time.time()
     amazonGraph = analyzer.importGraph("com-amazon.ungraph.txt")
-    print "time:", time.time() - start
+    print "import time:", time.time() - start
 
     print "Amazon product co-purchasing network"
+    # histogram(amazonGraph)
 
     start = time.time()
     print nx.info(amazonGraph)
+    # print "Graph degree: ", amazonGraph.degree()
     print "Amazon graph has:", analyzer.getNumberOfNodes(), "nodes"
     print "Amazon graph has:", analyzer.getNumberOfEdges(), "edges"
     print "time:", time.time() - start
+
+    analyzer.drawData()
+
+    print "BC: ", betweenness.betweenness_centrality(amazonGraph)
 
     start = time.time()
     print "Number of connected components: ", analyzer.getNumberOfConnectedComponents()
