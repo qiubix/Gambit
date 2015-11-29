@@ -3,7 +3,6 @@ import time
 import operator
 import matplotlib.pyplot as plt
 import math
-from networkx.algorithms.centrality import betweenness
 
 
 
@@ -59,6 +58,23 @@ class AmazonGraphAnalyzer:
         plt.plot(averageNeighbourDegrees.keys(), averageNeighbourDegrees.values(), 'ro')
         plt.show()
 
+    def calculatePearson(self):
+        averageNeighbourDegrees = self.getAverageDegreeOfNeighbours()
+        K = self.amazonGraph.number_of_nodes()
+        product = 0
+        summ = 0
+        sumSquared = 0
+        for key in averageNeighbourDegrees.iterkeys():
+            for value in averageNeighbourDegrees.itervalues():
+                product += key*value
+                summ += (key + value)
+                sumSquared += (key**2 + value**2)
+
+        bullshitExpression = (summ / (K * 2)) ** 2
+        anotherBullshitExpression = (sumSquared/(K*2))
+        ro = (product/K - bullshitExpression)/(anotherBullshitExpression - bullshitExpression)
+        return ro
+
 
 def histogram(G):
     sorted_degree = sorted(G.degree().items(), key=operator.itemgetter(1))
@@ -92,6 +108,8 @@ if __name__ == '__main__':
     amazonGraph = analyzer.importGraph("com-amazon.ungraph.txt")
     print "import time:", time.time() - start
 
+    print "pearson z palca: ", analyzer.calculatePearson()
+
     print "Amazon product co-purchasing network"
     # histogram(amazonGraph)
 
@@ -102,9 +120,7 @@ if __name__ == '__main__':
     print "Amazon graph has:", analyzer.getNumberOfEdges(), "edges"
     print "time:", time.time() - start
 
-    analyzer.drawData()
-
-    print "BC: ", betweenness.betweenness_centrality(amazonGraph)
+    # analyzer.drawData()
 
     start = time.time()
     print "Number of connected components: ", analyzer.getNumberOfConnectedComponents()
